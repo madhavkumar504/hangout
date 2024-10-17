@@ -1,15 +1,16 @@
 name: Deploy
 
+# Trigger on pull request merge into UAT
 on:
-  push:
-    branches:
-      - UAT
   pull_request:
     branches:
       - UAT
+    types:
+      - closed # Only runs when the PR is closed
 
 jobs:
   deploy:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
