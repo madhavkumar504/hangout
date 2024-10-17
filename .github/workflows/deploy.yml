@@ -1,21 +1,18 @@
 name: Deploy
 
-# Trigger the workflow on push and
-# pull request events on the production branch
+# Trigger the workflow on push and pull request events on the UAT branch
 on:
   push:
     branches:
-      - madhav
+      - UAT
 
-# Authenticate to the the server vi
-# and run our deployment script
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Deploy to server
-        uses: appleboy/ssh-action@madhav
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
