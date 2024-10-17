@@ -3,7 +3,7 @@ name: Deploy to Server on UAT Push
 on:
   push:
     branches:
-      - uat # Trigger on pushes to the uat
+      - uat # Trigger on pushes to t
 
 jobs:
   deploy:
