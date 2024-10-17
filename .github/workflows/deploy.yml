@@ -3,7 +3,7 @@ name: Deploy to Server on UAT Push
 on:
   push:
     branches:
-      - uat # Trigger on pushes to t
+      - UAT # Trigger on pushes to t
 
 jobs:
   deploy:
@@ -29,8 +29,8 @@ jobs:
         run: |
           cd /var/www/madhav.ready2pay.in/hangout || exit
           git config --global --add safe.directory /var/www/madhav.ready2pay.in/hangout
-          git checkout uat
-          git pull origin uat
+          git checkout UAT
+          git pull origin UAT
 
       - name: Deploy to Server
         run: |
