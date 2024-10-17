@@ -21,4 +21,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/madhav.ready2pay.in/cicd && ./.scripts/deploy.sh"
+          script: "cd /var/www/madhav.ready2pay.in/hangout && ./.scripts/deploy.sh"
