@@ -10,21 +10,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Deploy to server
+      - name: Set up SSH
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
-          script: "cd /var/www/madhav.ready2pay.in/hangout && ./.scripts/deploy.sh"
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Configure Git Safe Directory
-        run: git config --global --add safe.directory /var/www/madhav.ready2pay.in/hangout
+        run: |
+          git config --global --add safe.directory /var/www/madhav.ready2pay.in/hangout
 
       - name: Push Changes
         run: |
           cd /var/www/madhav.ready2pay.in/hangout
           git add .
-          git commit -m "Deploy changes"
+          git commit -m "Deploy changes" || echo "No changes to commit"
           git push origin madhav
