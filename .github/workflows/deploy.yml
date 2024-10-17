@@ -1,8 +1,10 @@
 name: Deploy
 
-# Trigger the workflow on push and pull request events on the UAT branch
 on:
   push:
+    branches:
+      - UAT
+  pull_request:
     branches:
       - UAT
 
