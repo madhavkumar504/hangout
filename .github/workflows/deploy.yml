@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all branches
 
       - name: Set up SSH
         uses: webfactory/ssh-agent@v0.5.3
@@ -24,11 +26,11 @@ jobs:
           git config --global user.email "your-email@example.com"
 
       - name: Fetch Branches
-        run: git fetch origin
+        run: git fetch --all # Fetch all branches
 
       - name: Merge madhav into uat
         run: |
-          git checkout uat
+          git checkout uat  # Check out the uat branch
           git merge --no-ff origin/madhav -m "Auto-merge madhav into uat"
           git push origin uat
 
