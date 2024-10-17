@@ -1,0 +1,38 @@
+name: Deploy to Server on UAT Push
+
+on:
+  push:
+    branches:
+      - uat # Trigger on pushes to the uat
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all branches
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSHKEY }}
+
+      - name: Configure Git User
+        run: |
+          git config --global user.name "Your GitHub Username"
+          git config --global user.email "your-email@example.com"
+
+      - name: Pull Latest Code from UAT
+        run: |
+          cd /var/www/madhav.ready2pay.in/hangout || exit
+          git config --global --add safe.directory /var/www/madhav.ready2pay.in/hangout
+          git checkout uat
+          git pull origin uat
+
+      - name: Deploy to Server
+        run: |
+          chmod +x ./.deploy.sh
+          ./.deploy.sh  # Run your deployment script
