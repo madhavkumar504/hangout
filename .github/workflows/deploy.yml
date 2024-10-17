@@ -1,12 +1,12 @@
-name: Deploy to UAT
+name: Deploy to Server on UAT Push
 
 on:
   push:
     branches:
-      - madhav
+      - uat # Trigger on pushes to the uat branch
 
 jobs:
-  merge-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,16 +25,14 @@ jobs:
           git config --global user.name "Your GitHub Username"
           git config --global user.email "your-email@example.com"
 
-      - name: Fetch Branches
-        run: git fetch --all # Fetch all branches
-
-      - name: Merge madhav into uat
+      - name: Pull Latest Code from UAT
         run: |
-          git checkout uat  # Check out the uat branch
-          git merge --no-ff origin/madhav -m "Auto-merge madhav into uat"
-          git push origin uat
+          cd /var/www/madhav.ready2pay.in/hangout || exit
+          git config --global --add safe.directory /var/www/madhav.ready2pay.in/hangout
+          git checkout uat
+          git pull origin uat
 
       - name: Deploy to Server
         run: |
           chmod +x ./.deploy.sh
-          ./.deploy.sh
+          ./.deploy.sh  # Run your deployment script
