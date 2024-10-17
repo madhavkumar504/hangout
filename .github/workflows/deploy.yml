@@ -22,5 +22,9 @@ jobs:
       - name: Configure Git Safe Directory
         run: git config --global --add safe.directory /var/www/madhav.ready2pay.in/hangout
 
-      - name: Run Deployment Script
-        run: ./.scripts/deploy.sh
+      - name: Push Changes
+        run: |
+          cd /var/www/madhav.ready2pay.in/hangout
+          git add .
+          git commit -m "Deploy changes"
+          git push origin madhav
