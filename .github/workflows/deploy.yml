@@ -1,21 +1,21 @@
 name: Deploy
 
-# Trigger on pull request merge into UAT
+# Trigger the workflow on push and
+# pull request events on the production branch
 on:
-  pull_request:
+  push:
     branches:
-      - UAT
-    types:
-      - closed # Only runs when the PR is closed
+      - madhav
 
+# Authenticate to the the server vi
+# and run our deployment script
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Deploy to server
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@madhav
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
